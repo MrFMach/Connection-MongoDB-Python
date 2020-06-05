@@ -7,18 +7,31 @@ cliente = MongoClient('mongodb://localhost:27017')
 banco = cliente ['meubanco']
 #criando coleção 'meuscursos' no mongodb e atribuindo à variável local cursos
 cursos = banco ['meuscursos']
-#criando um documento chamado curso
-curso = {
-    'autor':'Maria',
-    'curso':'MongoDB',
-    'valor':120,
-    'classificação':5
-}
-#inserindo o documento curso na coleção meuscursos
-resultado = cursos.insert_one(curso)
+#inserindo vários documentos
+matriz_cursos = [
+    {
+        'autor': 'José da Silva',
+        'curso': 'Python avançado',
+        'valor': 130,
+        'classificação': 5 
+    },  {
+        'autor': 'Luan Cardoso',
+        'curso': 'Lógica de Programação',
+        'valor': 70,
+        'classificação': 4 
+    },  {
+        'autor': 'Rita Nogueira',
+        'curso': 'HTML e CSS Básico',
+        'valor': 180,
+        'classificação': 4 
+    },  {
+        'autor': 'Mai Tsnuga',
+        'curso': 'Algorítmos',
+        'valor': 135,
+        'classificação': 3 
+    },
+]
 
-if resultado.acknowledged:
-    print('Curso inserido com sucesso. O ID do documento é ' + str(resultado.inserted_id))
-
-
-
+resultado = cursos.insert_many(matriz_cursos)
+for objeto_id in resultado.inserted_ids:
+    print('Curso inserido com sucesso. O ID do curso é: ' + str(objeto_id))
